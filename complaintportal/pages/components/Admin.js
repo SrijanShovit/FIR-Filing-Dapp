@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react";
-
+import toast from "react-hot-toast";
 
 const Admin = () => {
     const [id,setId] = useState(0);
-    const [rid,setRId] = useState(0);
+    const [rId,setRId] = useState(0);
     const [approvalRemark,setapprovalRemark] = useState("");
     const [resolutionRemark,setResolutionRemark] = useState("");
 
-    const {contract} = useContract("0x45F757e011608dA67354c2839158cf3a44AF28ef");
+    const {contract} = useContract("0x70017Cd7FEf1057Cb7C556554d184e4521e8d34E");
     const { data:nextId} = useContractRead(contract, "nextId");
     const { data:pendingApprovals} = useContractRead(contract, "pendingApprovals",0);
     const { data:pendingResolutions} = useContractRead(contract, "pendingResolutions",0);
@@ -20,49 +20,88 @@ const Admin = () => {
     const { mutateAsync: declineComplaint} = useContractWrite(contract, "declineComplaint");
 
     const getPendingApprovals = async () => {
+        const notification = toast.loading("Getting Pending Approval Id");
         try {
           const data = await calcPendingApprovals([]);
+          toast.success(`Fetched pending approvals number`,{
+            id:notification
+        });
           console.info("contract call successs", data);
         } catch (err) {
+            toast.error("Sorry!! Something went wrong",{
+                id:notification 
+            });
           console.error("contract call failure", err);
         }
       }
 
       const getPendingResolutions = async () => {
+        const notification = toast.loading("Getting Pending Resolution Id");
         try {
             const data = await calcPendingResolutions([]);
+            toast.success(`Fetched pending resolutions number`,{
+                id:notification
+            });
             console.info("contract call successs", data);
           } catch (err) {
+            toast.error("Sorry!! Something went wrong",{
+                id:notification 
+            });
             console.error("contract call failure", err);
           }
       }
 
     const handleApproveComplaint = async () => {
+        const notification = toast.loading("Approving complaint");
+
         try {
           const data = await approveCompalint([ id, approvalRemark ]);
+          toast.success(`Approved Complaint with Id ${id}`,{
+            id:notification
+        });
           console.info("contract call successs", data);
         } catch (err) {
+            toast.error("Sorry!! Something went wrong",{
+                id:notification 
+            });
           console.error("contract call failure", err);
         }
       }
 
     const handleDeclineComplaint = async () => {
+        const notification = toast.loading("Declining complaint");
         try {
           const data = await declineComplaint([ id, approvalRemark ]);
+          toast.success(`Declined Complaint with Id ${id}`,{
+            id:notification
+        });
           console.info("contract call successs", data);
         } catch (err) {
+            toast.error("Sorry!! Something went wrong",{
+                id:notification 
+            });
           console.error("contract call failure", err);
         }
       }
 
     const handleResolveComplaint = async()=>{
+        const notification = toast.loading("Marking case solved");
         try {
-            const data = await resolveComplaint([ id, resolutionRemark ]);
+            const data = await resolveComplaint([ rId, resolutionRemark ]);
+            toast.success(`Solved Case with Id ${rId}`,{
+                id:notification
+            });
             console.info("contract call successs", data);
           } catch (err) {
+            toast.error("Sorry!! Something went wrong",{
+                id:notification 
+            });
             console.error("contract call failure", err);
           }
     }
+
+    console.log("pendingApprovals : ",pendingApprovals);
+    console.log("pendingResolutions : ",pendingResolutions);
   
     return (
         <div className='getter-container md:p-[30px]  md:m-5 xl:flex xl:flex-row'>

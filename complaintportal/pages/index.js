@@ -11,12 +11,12 @@ export default function Home() {
 
   //gives us user's address
   const address = useAddress();
-  const {contract} = useContract("0x45F757e011608dA67354c2839158cf3a44AF28ef");
+  const {contract} = useContract("0x70017Cd7FEf1057Cb7C556554d184e4521e8d34E");
   
   const { data:officer} = useContractRead(contract, "officer");
 
-  console.log("Officer is : ",officer);
-  console.log("Current address is : ",address);
+  // console.log("Officer is : ",officer);
+  // console.log("Current address is : ",address);
 
   return (
     <div className={styles.container}>

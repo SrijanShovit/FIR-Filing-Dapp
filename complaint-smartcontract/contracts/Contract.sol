@@ -70,10 +70,10 @@ contract ComplaintContract {
             Complaints[_id].exists == true,
             "This complaint id does not exist"
         );
-        require(Complaints[_id].isApproved,
+        require(Complaints[_id].isApproved == false,
         "Complaint is already approved"
         );
-        Complaints[_id].isApproved;
+        Complaints[_id].isApproved = true;
         Complaints[_id].approvalRemark = _approvalRemark;
 
     }
@@ -82,11 +82,11 @@ contract ComplaintContract {
     function declineComplaint(uint256 _id,string memory _approvalRemark
     ) public onlyOfficer{
         require(
-            Complaints[_id].exists,
+            Complaints[_id].exists == true,
             "This complaint id does not exist"
         );
         require(
-            Complaints[_id].isApproved,
+            Complaints[_id].isApproved == false,
             "Complaint is already approved"
         );
         Complaints[_id].exists = false;
@@ -99,15 +99,15 @@ contract ComplaintContract {
     ) public onlyOfficer
     {
         require(
-            Complaints[_id].exists,
+            Complaints[_id].exists == true,
             "This complaint id does not exist"
         );
         require(
-            Complaints[_id].isApproved,
+            Complaints[_id].isApproved == true,
             "Complaint is already approved"
         );
         require( 
-            !(Complaints[_id].isApproved),
+            (Complaints[_id].isResolved) == false,
             "Complaint is already resolved"
         );
        

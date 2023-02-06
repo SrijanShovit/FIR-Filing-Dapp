@@ -3,7 +3,7 @@ import { useContract,useContractRead } from '@thirdweb-dev/react';
 
 const Status = () => {
     const [id,setId] = useState(0);
-    const {contract} = useContract("0x45F757e011608dA67354c2839158cf3a44AF28ef");
+    const {contract} = useContract("0x70017Cd7FEf1057Cb7C556554d184e4521e8d34E");
     const {data:Complaints} = useContractRead(contract,"Complaints",id);
 
   return (

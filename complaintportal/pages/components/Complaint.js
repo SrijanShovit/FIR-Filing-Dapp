@@ -6,7 +6,7 @@ const Complaint = () => {
     const [title,setTitle] = useState("");
     const [description,setDescription] = useState("");
 
-    const {contract} = useContract("0x45F757e011608dA67354c2839158cf3a44AF28ef");
+    const {contract} = useContract("0x70017Cd7FEf1057Cb7C556554d184e4521e8d34E");
     const { data:nextId} = useContractRead(contract, "nextId");
     const { mutateAsync: fileComplaint } = useContractWrite(contract, "fileComplaint");
 
@@ -23,7 +23,7 @@ const Complaint = () => {
           } catch (err) {
             toast.error("Sorry!! Something went wrong",{
                 id:notification 
-            })
+            });
             console.error("contract call failure", err);
           }
     }
